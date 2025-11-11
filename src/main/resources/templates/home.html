@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resolução - Cálculo Numérico 2025.2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root{
+            height: 100vh;
+            width: 100vw;
+        }
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background: #f8f9fa;
+        }
+        header {
+            background: #0d6efd;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .card {
+            border-radius: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: #0d6efd;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: static;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Cabeçalho -->
+<header>
+    <div class="container">
+        <h1 class="fw-bold">Métodos Numéricos - Cálculo Numérico</h1>
+        <p class="lead mb-0">Selecione um dos tópicos abaixo para iniciar</p>
+    </div>
+</header>
+
+<!-- Conteúdo principal -->
+<main class="container my-5">
+    <div class="row g-4">
+
+        <!-- Tópico 1 -->
+        <div class="col-md-6 col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-primary"><i class="bi bi-diagram-3"></i> Tópico 01</h4>
+                    <p class="card-text">Sistemas de Equações Lineares – Métodos Diretos (ex: Eliminação de Gauss, LU, etc.).</p>
+                    <a href="/metodosDiretos" class="btn btn-primary w-100">Resolver Problemas</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tópico 2 -->
+        <div class="col-md-6 col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-success"><i class="bi bi-cpu"></i> Tópico 02</h4>
+                    <p class="card-text">Sistemas de Equações Lineares – Métodos Iterativos (ex: Gauss-Seidel, Jacobi, etc.).</p>
+                    <a href="/metodoIterativo" class="btn btn-success w-100">Resolver Problemas</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tópico 3 -->
+        <div class="col-md-6 col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-warning"><i class="bi bi-graph-up"></i> Tópico 03</h4>
+                    <p class="card-text">Interpolação Polinomial e Ajuste por Mínimos Quadrados (ex: Lagrange, Newton, Regressão).</p>
+                    <a href="/interpolacaoPolinominal" class="btn btn-warning text-white w-100">Resolver Problemas</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tópico 4 -->
+        <div class="col-md-6 col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-danger"><i class="bi bi-droplet-half"></i> Tópico 04</h4>
+                    <p class="card-text">Integração Numérica (ex: Regra do Trapézio, Simpson Repetida, áreas de rios e navios).</p>
+                    <a href="/integracaoNumerica" class="btn btn-danger w-100">Resolver Problemas</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Botão voltar -->
+    <div class="text-center mt-5">
+        <a href="/home" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle"></i> Voltar à Página Inicial</a>
+    </div>
+</main>
+
+<!-- Rodapé -->
+<footer>
+    <p class="mb-0">© 2025 - UNIVASF | Cálculo Numérico - Prof. Jorge Luis Cavalcanti Ramos</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
