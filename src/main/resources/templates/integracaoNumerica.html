@@ -5,44 +5,41 @@
     <title>Integração Numérica</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         body {
-            background: linear-gradient(to bottom right, #e9f0ff, #f7f9fc);
+            background: #eef2f7;
             font-family: "Segoe UI", sans-serif;
         }
 
-        .title-main {
-            font-weight: 800;
-            font-size: 32px;
-            color: #0d47a1;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        header {
+            background: #0d6efd;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
         .card {
             border-radius: 18px;
             border: none;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
         }
 
         .card-header {
-            background: linear-gradient(90deg, #0d6efd, #0b5ed7);
+            background: #0d6efd;
             color: white;
             font-weight: bold;
-            border-radius: 18px 18px 0 0;
             font-size: 18px;
+            border-radius: 18px 18px 0 0;
         }
 
         .example-btn {
             border-radius: 25px;
-            transition: 0.25s ease;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        .example-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 14px rgba(0,0,0,0.15);
+            padding: 8px 20px;
         }
 
         .step-box {
@@ -55,64 +52,43 @@
         }
 
         .subtitle {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
             color: #0d47a1;
-            margin-bottom: 6px;
         }
 
-        pre {
-            background: #fdfdfd;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid #dce2eb;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #0d6efd75, transparent);
-            margin: 28px 0;
-        }
-
-        table {
-            overflow: hidden;
-            border-radius: 12px;
-        }
-
-        .table thead {
-            background: #0d6efd;
+        footer {
+            background-color: #0d6efd;
             color: white;
-        }
-
-        .table tbody tr:hover {
-            background: #e7f1ff;
+            text-align: center;
+            padding: 14px;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
 
-<div class="container my-5">
+<!-- HEADER AZUL -->
+<header>
+    <h1 class="fw-bold"><i class="bi bi-water"></i> Integração Numérica – Tópico 04</h1>
+    <p class="mb-0 fs-5">Regra dos Trapézios e Simpson 1/3</p>
+</header>
 
-    <h2 class="mb-4 text-center title-main">Integração Numérica</h2>
-    <p class="text-muted text-center">Selecione um exemplo ou insira seus próprios valores.</p>
+<div class="container">
+
+    <!-- EXEMPLOS -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">Exemplos Prontos</div>
+
+        <div class="card-body text-center">
+            <button class="btn btn-outline-primary example-btn" onclick="carregarExemplo1()">Exemplo 1</button>
+            <button class="btn btn-outline-danger example-btn" onclick="limparCampos()">Limpar</button>
+        </div>
+    </div>
 
     <!-- FORMULÁRIO -->
     <div class="card shadow-sm mb-4">
-        <div class="card-header">
-            Exemplos Prontos
-        </div>
-
         <div class="card-body">
-
-            <div class="d-flex gap-3 mb-4 justify-content-center">
-                <button type="button" class="btn btn-outline-primary example-btn" onclick="carregarExemplo1()">Exemplo 1</button>
-                <button type="button" class="btn btn-outline-primary example-btn" onclick="carregarExemplo2()">Exemplo 2</button>
-                <button type="button" class="btn btn-outline-primary example-btn" onclick="carregarExemplo3()">Exemplo 3</button>
-                <button type="button" class="btn btn-outline-danger example-btn" onclick="limparCampos()">Limpar</button>
-            </div>
-
             <form method="post" th:action="@{/integracaoNumerica}">
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Valores de x:</label>
@@ -129,7 +105,9 @@
                     <textarea id="campoM2" name="m2" class="form-control" rows="2" th:text="${m2}"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100 fw-bold py-2">Calcular Área</button>
+                <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
+                    <i class="bi bi-calculator"></i> Calcular Área
+                </button>
             </form>
         </div>
     </div>
@@ -138,136 +116,110 @@
     <div th:if="${erro}" class="alert alert-danger shadow-sm" th:text="${erro}"></div>
 
     <!-- RESULTADOS -->
-    <div th:if="${mensagem}" class="card shadow-sm">
+    <div th:if="${mensagem}" class="card shadow-sm p-4">
 
-        <div class="card-header">Resultados</div>
+        <h3 class="text-success fw-bold text-center mb-4" th:text="${mensagem}"></h3>
 
-        <div class="card-body">
+        <div class="row">
 
-            <h4 class="text-success fw-bold mb-3 text-center" th:text="${mensagem}"></h4>
+            <!-- RESULTADOS NUMÉRICOS -->
+            <div class="col-md-5">
+                <div class="subtitle">Áreas Calculadas</div>
 
-            <div class="row">
-
-                <!-- RESULTADOS -->
-                <div class="col-md-5">
-
-                    <div class="subtitle mb-2">Áreas Calculadas</div>
-
-                    <p><strong>Trapézios:</strong>
-                        <span class="text-primary fw-bold" th:text="${areaTrapFmt}"></span> m²
-                    </p>
-
-                    <p><strong>Simpson:</strong>
-                        <span class="text-primary fw-bold" th:text="${areaSimpsonFmt}"></span> m²
-                    </p>
-
-                    <hr>
-
-                    <!-- PASSO 1 -->
-                    <div class="step-box">
-                        <div class="subtitle">Passo 1 — f(x) = M2(x) − M1(x)</div>
-                        <pre th:each="item, iter : ${fLista}">
-f(<span th:text="${iter.index}"></span>) = <span th:text="${item}"></span>
-                        </pre>
-                    </div>
-
-                </div>
-
-                <!-- TABELA -->
-                <div class="col-md-7">
-                    <div class="subtitle">Tabela de Valores</div>
-
-                    <table class="table table-hover table-bordered mt-2">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>x</th>
-                            <th>M1</th>
-                            <th>M2</th>
-                            <th>f(x)</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr th:each="i : ${#numbers.sequence(0, fLista.size() - 1)}">
-                            <td th:text="${i}"></td>
-                            <td th:text="${x.split(' ')[i]}"></td>
-                            <td th:text="${m1.split(' ')[i]}"></td>
-                            <td th:text="${m2.split(' ')[i]}"></td>
-                            <td th:text="${fLista[i]}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <hr>
-
-            <!-- PASSO A PASSO -->
-            <h4 class="text-primary mt-3 text-center fw-bold">Passo a Passo da Integração</h4>
-
-            <!-- Δx -->
-            <div class="step-box mt-3">
-                <div class="subtitle">Passo 2 — Cálculo de Δx</div>
-                <p>
-                    Δx = valor entre dois pontos consecutivos do eixo x.
-                    <br><strong>Δx calculado:</strong>
-                    <span class="text-primary fw-bold" th:text="${deltaX}"></span>
-                </p>
-            </div>
-
-            <!-- TRAPÉZIOS -->
-            <div class="step-box">
-                <div class="subtitle">Passo 3 — Regra dos Trapézios</div>
-
-                <p><strong>Soma interna (Σ fᵢ):</strong>
-                    <span class="text-primary fw-bold" th:text="${somaTrapezios}"></span>
+                <p><strong>Regra dos Trapézios:</strong>
+                    <span class="text-primary fw-bold" th:text="${areaTrapFmt}"></span> m²
                 </p>
 
-                <p><strong>Resultado final:</strong>
-                    <span th:text="${areaTrapFmt}"></span> m²
-                </p>
-            </div>
-
-            <!-- SIMPSON -->
-            <div class="step-box">
-                <div class="subtitle">Passo 4 — Regra de Simpson 1/3</div>
-
-                <p><strong>Soma Ímpares:</strong>
-                    <span class="text-primary fw-bold" th:text="${somaImpares}"></span>
-                </p>
-
-                <p><strong>Soma Pares:</strong>
-                    <span class="text-primary fw-bold" th:text="${somaPares}"></span>
-                </p>
-
-                <p><strong>Resultado final:</strong>
+                <p><strong>Regra de Simpson 1/3:</strong>
                     <span class="text-primary fw-bold" th:text="${areaSimpsonFmt}"></span> m²
                 </p>
+
+                <hr>
+
+                <!-- Passo 1 -->
+                <div class="step-box">
+                    <div class="subtitle">Passo 1 — Cálculo de f(x) = M2(x) − M1(x)</div>
+                    <pre th:each="item, iter : ${fLista}">
+f(x<span th:text="${iter.index}"></span>) = <span th:text="${item}"></span>
+                    </pre>
+                </div>
             </div>
 
+            <!-- TABELA -->
+            <div class="col-md-7">
+                <div class="subtitle">Tabela de Valores</div>
+
+                <table class="table table-bordered table-hover mt-3">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>x</th>
+                        <th>M1</th>
+                        <th>M2</th>
+                        <th>f(x)</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="i : ${#numbers.sequence(0, fLista.size() - 1)}">
+                        <td th:text="${i}"></td>
+                        <td th:text="${x.split(' ')[i]}"></td>
+                        <td th:text="${m1.split(' ')[i]}"></td>
+                        <td th:text="${m2.split(' ')[i]}"></td>
+                        <td th:text="${fLista[i]}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <hr>
+
+        <!-- PASSO A PASSO -->
+        <h4 class="text-primary text-center fw-bold">Passo a Passo dos Cálculos</h4>
+
+        <!-- Δx -->
+        <div class="step-box mt-3">
+            <div class="subtitle">Passo 2 — Determinação de Δx</div>
+            <p><strong>Δx:</strong> <span class="text-primary fw-bold" th:text="${deltaX}"></span></p>
+        </div>
+
+        <!-- TRAPÉZIOS -->
+        <div class="step-box">
+            <div class="subtitle">Passo 3 — Regra dos Trapézios</div>
+            <p><strong>Soma interna Σfᵢ =</strong> <span th:text="${somaTrapezios}"></span></p>
+            <p><strong>Resultado final:</strong> <span th:text="${areaTrapFmt}"></span> m²</p>
+        </div>
+
+        <!-- SIMPSON -->
+        <div class="step-box">
+            <div class="subtitle">Passo 4 — Regra de Simpson</div>
+            <p><strong>Soma Ímpares:</strong> <span th:text="${somaImpares}"></span></p>
+            <p><strong>Soma Pares:</strong> <span th:text="${somaPares}"></span></p>
+            <p><strong>Resultado final:</strong>
+                <span class="text-primary fw-bold" th:text="${areaSimpsonFmt}"></span> m²
+            </p>
+        </div>
+
     </div>
+
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
+
 </div>
 
-<!-- BOTÕES DE EXEMPLO -->
+<footer>
+    © 2025 - UNIVASF | Cálculo Numérico – Integração Numérica
+</footer>
+
 <script>
     function carregarExemplo1() {
         campoX.value  = "0 10 20 30 40";
         campoM1.value = "50.8 86.2 136 72.8 51";
         campoM2.value = "113.6 144.5 185 171.2 95.3";
-    }
-
-    function carregarExemplo2() {
-        campoX.value  = "0 10 20 30";
-        campoM1.value = "40 60 80 50";
-        campoM2.value = "90 120 160 110";
-    }
-
-    function carregarExemplo3() {
-        campoX.value  = "0 10 20 30 40 50";
-        campoM1.value = "45 70 95 110 80 55";
-        campoM2.value = "100 130 170 200 150 90";
     }
 
     function limparCampos() {

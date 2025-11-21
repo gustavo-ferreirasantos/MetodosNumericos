@@ -1,111 +1,62 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Métodos Diretos - Eliminação de Gauss</title>
+    <title>Ponte de Wheatstone – Gauss-Seidel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fa;
-        }
-        header {
-            background-color: #0d6efd;
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-        }
-        .card {
-            border-radius: 16px;
-        }
-        .btn-primary {
-            width: 100%;
-        }
-    </style>
 </head>
-<body>
+<body class="p-4">
 
-<header>
-    <h1 class="fw-bold"><i class="bi bi-diagram-3"></i> Método de Eliminação de Gauss</h1>
-    <p class="mb-0">Resolva sistemas lineares 3x3</p>
-</header>
+<h2 class="text-center mb-4">Ponte de Wheatstone – Método de Gauss-Seidel</h2>
 
-<main class="container my-5">
+<div class="container">
 
-    <div class="card shadow-sm p-4">
-        <form action="/sistema-linear/gauss" method="post" class="row g-3">
+    <form method="post" action="/metodoIterativo" class="card p-4 shadow">
 
-            <h5 class="mb-3 text-primary">Insira os coeficientes do sistema</h5>
+        <div class="row">
+            <div class="col-md-4">
+                <label>R1:</label>
+                <input type="number" step="any" name="R1" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label>R2:</label>
+                <input type="number" step="any" name="R2" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label>R3:</label>
+                <input type="number" step="any" name="R3" class="form-control" required>
+            </div>
+        </div>
 
-            <!-- Linha 1 -->
-            <div class="col-md-2">
-                <input type="number" step="any" name="a11" class="form-control" placeholder="a11" required>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>R4:</label>
+                <input type="number" step="any" name="R4" class="form-control" required>
             </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="a12" class="form-control" placeholder="a12" required>
+            <div class="col-md-4">
+                <label>R5:</label>
+                <input type="number" step="any" name="R5" class="form-control" required>
             </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="a13" class="form-control" placeholder="a13" required>
+            <div class="col-md-4">
+                <label>Fonte E (Volts):</label>
+                <input type="number" step="any" name="E" class="form-control" required>
             </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="b1" class="form-control" placeholder="b1" required>
-            </div>
+        </div>
 
-            <!-- Linha 2 -->
-            <div class="col-md-2">
-                <input type="number" step="any" name="a21" class="form-control" placeholder="a21" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="a22" class="form-control" placeholder="a22" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="a23" class="form-control" placeholder="a23" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="b2" class="form-control" placeholder="b2" required>
-            </div>
+        <button class="btn btn-primary w-100 mt-4">Calcular Correntes</button>
 
-            <!-- Linha 3 -->
-            <div class="col-md-2">
-                <input type="number" step="any" name="a31" class="form-control" placeholder="a31" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="a32" class="form-control" placeholder="a32" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="a33" class="form-control" placeholder="a33" required>
-            </div>
-            <div class="col-md-2">
-                <input type="number" step="any" name="b3" class="form-control" placeholder="b3" required>
-            </div>
+    </form>
 
-            <div class="col-12 mt-4">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-play-circle"></i> Calcular</button>
-            </div>
-        </form>
+    <div class="card p-4 mt-4 shadow" th:if="${I1 != null}">
+        <h4 class="text-success">Resultados</h4>
+        <p>I₁ = <span th:text="${I1}"></span> A</p>
+        <p>I₂ = <span th:text="${I2}"></span> A</p>
+        <p>I₃ = <span th:text="${I3}"></span> A</p>
+        <p>I₄ = <span th:text="${I4}"></span> A</p>
+        <p>I₅ = <span th:text="${I5}"></span> A</p>
     </div>
 
-    <!-- Exibir resultados -->
-    <div class="card shadow-sm mt-4 p-4" th:if="${resGauss != null}">
-        <h5 class="text-success"><i class="bi bi-check-circle"></i> Resultado:</h5>
-        <p class="mb-0">
-            <strong>X₁:</strong> <span th:text="${resGauss[0]}"></span> <br>
-            <strong>X₂:</strong> <span th:text="${resGauss[1]}"></span> <br>
-            <strong>X₃:</strong> <span th:text="${resGauss[2]}"></span>
-        </p>
-    </div>
+</div>
 
-    <div class="text-center mt-4">
-        <a href="/home" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
-    </div>
-
-</main>
-
-<footer class="text-center text-white py-3" style="background-color:#0d6efd;">
-    © 2025 - UNIVASF | Cálculo Numérico - Métodos Diretos
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
