@@ -5,90 +5,148 @@
     <title>Ponte de Wheatstone – Gauss-Seidel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef2f7, #dfe6ee);
+            min-height: 100vh;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        header {
+            background: #0d6efd;
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .card {
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            background: #0d6efd;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .example-btn {
+            border-radius: 20px;
+            padding: 8px 20px;
+        }
+
+        footer {
+            margin-top: 40px;
+            background-color: #0d6efd;
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+    </style>
 </head>
-<body class="p-4">
+<body>
 
-<h2 class="text-center mb-4">Ponte de Wheatstone – Método de Gauss-Seidel</h2>
+<header>
+    <h1 class="fw-bold"><i class="bi bi-diagram-3"></i> Ponte de Wheatstone</h1>
+    <p class="mb-0 fs-5">Método de Gauss-Seidel</p>
+</header>
 
-<div class="container">
-
+<main class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
 
             <!-- EXEMPLO -->
             <div class="card shadow-sm mb-4">
+                <div class="card-header">Exemplos Prontos</div>
                 <div class="card-body text-center">
-                    <button class="btn btn-outline-primary" onclick="carregarExemplo()">
+                    <button class="btn btn-outline-primary example-btn" onclick="carregarExemplo()">
                         <i class="bi bi-lightbulb"></i> Carregar Exemplo
                     </button>
-                    <button class="btn btn-outline-danger" onclick="limparCampos()">
+                    <button class="btn btn-outline-danger example-btn" onclick="limparCampos()">
                         <i class="bi bi-trash"></i> Limpar
                     </button>
                 </div>
             </div>
 
-            <form method="post" action="/metodoIterativo" class="card p-4 shadow">
+            <!-- FORMULÁRIO -->
+            <form method="post" action="/metodoIterativo" class="card p-4 shadow-sm">
 
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label for="R1" class="form-label">R1 (Ohms):</label>
+                        <label for="R1" class="form-label fw-semibold">R1 (Ohms):</label>
                         <input type="number" step="any" id="R1" name="R1" class="form-control" th:value="${R1}" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="R2" class="form-label">R2 (Ohms):</label>
+                        <label for="R2" class="form-label fw-semibold">R2 (Ohms):</label>
                         <input type="number" step="any" id="R2" name="R2" class="form-control" th:value="${R2}" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="R3" class="form-label">R3 (Ohms):</label>
+                        <label for="R3" class="form-label fw-semibold">R3 (Ohms):</label>
                         <input type="number" step="any" id="R3" name="R3" class="form-control" th:value="${R3}" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label for="R4" class="form-label">R4 (Ohms):</label>
+                        <label for="R4" class="form-label fw-semibold">R4 (Ohms):</label>
                         <input type="number" step="any" id="R4" name="R4" class="form-control" th:value="${R4}" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="R5" class="form-label">R5 (Ohms):</label>
+                        <label for="R5" class="form-label fw-semibold">R5 (Ohms):</label>
                         <input type="number" step="any" id="R5" name="R5" class="form-control" th:value="${R5}" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="E" class="form-label">Fonte E (Volts):</label>
+                        <label for="E" class="form-label fw-semibold">Fonte E (Volts):</label>
                         <input type="number" step="any" id="E" name="E" class="form-control" th:value="${E}" required>
                     </div>
                 </div>
 
-                <button class="btn btn-primary w-100 mt-3">
+                <button class="btn btn-primary w-100 mt-3 fw-bold py-2">
                     <i class="bi bi-calculator"></i> Calcular Correntes
                 </button>
 
             </form>
 
-            <div class="card p-4 mt-4 shadow" th:if="${I1 != null}">
-                <h4 class="text-success">Resultados</h4>
-                <!-- Formatting numbers to 2 decimal places and converting to mA for better readability -->
-                <p>I₁ = <span th:text="${#numbers.formatDecimal(I1 * 1000, 1, 2)}"></span> mA</p>
-                <p>I₂ = <span th:text="${#numbers.formatDecimal(I2 * 1000, 1, 2)}"></span> mA</p>
-                <p>I₃ = <span th:text="${#numbers.formatDecimal(I3 * 1000, 1, 2)}"></span> mA</p>
-                <p>I₄ = <span th:text="${#numbers.formatDecimal(I4 * 1000, 1, 2)}"></span> mA</p>
-                <p>I₅ = <span th:text="${#numbers.formatDecimal(I5 * 1000, 1, 2)}"></span> mA</p>
+            <!-- RESULTADOS -->
+            <div class="card p-4 mt-4 shadow-sm" th:if="${I1 != null}">
+                <h4 class="text-success fw-bold"><i class="bi bi-check-circle"></i> Resultados</h4>
+                <p class="mt-2">I₁ = <span class="fw-bold" th:text="${#numbers.formatDecimal(I1 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₂ = <span class="fw-bold" th:text="${#numbers.formatDecimal(I2 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₃ = <span class="fw-bold" th:text="${#numbers.formatDecimal(I3 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₄ = <span class="fw-bold" th:text="${#numbers.formatDecimal(I4 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₅ = <span class="fw-bold" th:text="${#numbers.formatDecimal(I5 * 1000, 1, 2)}"></span> mA</p>
                 <hr>
-                <p><b>I₆ (Fonte) = <span th:text="${#numbers.formatDecimal(I6 * 1000, 1, 2)}"></span> mA</b></p>
+                <p class="fs-5"><b>I₆ (Fonte) = <span class="text-primary" th:text="${#numbers.formatDecimal(I6 * 1000, 1, 2)}"></span> mA</b></p>
             </div>
+
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+            </div>
+
         </div>
     </div>
+</main>
 
-</div>
+<footer>
+    © 2025 - UNIVASF | Cálculo Numérico - Métodos Iterativos
+</footer>
 
 <script>
     function carregarExemplo() {
-        document.getElementById('R1').value = 20;
-        document.getElementById('R2').value = 120;
-        document.getElementById('R3').value = 120;
+        document.getElementById('R1').value = 100;
+        document.getElementById('R2').value = 150;
+        document.getElementById('R3').value = 220;
         document.getElementById('R4').value = 120;
-        document.getElementById('R5').value = 120;
-        document.getElementById('E').value = 30;
+        document.getElementById('R5').value = 270;
+        document.getElementById('E').value = 12;
     }
 
     function limparCampos() {
