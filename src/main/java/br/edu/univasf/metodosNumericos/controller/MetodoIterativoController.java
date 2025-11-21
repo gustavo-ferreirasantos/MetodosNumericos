@@ -47,14 +47,23 @@ public class MetodoIterativoController {
         // Based on the corrected circuit diagram:
         // I1 flows from E to Vb through R1
         // I2 flows from E to Vc through R2
-        // I3 flows from Vb to GND through R3
-        // I4 flows from Vc to GND through R4
-        // I5 flows between Vb and Vc through R5 (direction depends on which voltage is higher)
-        model.addAttribute("I1", (E - Vb) / R1);
-        model.addAttribute("I2", (E - Vc) / R2);
-        model.addAttribute("I3", Vb / R3);
-        model.addAttribute("I4", Vc / R4);
-        model.addAttribute("I5", (Vb - Vc) / R5);
+        // I3 flows from Vc to GND through R3
+        // I4 flows from Vb to GND through R4
+        // I5 flows between Vb and Vc through R5
+        // I6 is the total source current (I1 + I2)
+        double i1 = (E - Vb) / R1;
+        double i2 = (E - Vc) / R2;
+        double i3 = Vc / R3;
+        double i4 = Vb / R4;
+        double i5 = (Vb - Vc) / R5;
+        double i6 = i1 + i2;
+
+        model.addAttribute("I1", i1);
+        model.addAttribute("I2", i2);
+        model.addAttribute("I3", i3);
+        model.addAttribute("I4", i4);
+        model.addAttribute("I5", i5);
+        model.addAttribute("I6", i6);
 
         // Add input values to the model to repopulate the form
         model.addAttribute("R1", R1);

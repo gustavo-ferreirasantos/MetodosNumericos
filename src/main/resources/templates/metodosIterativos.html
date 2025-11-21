@@ -51,12 +51,14 @@
 
             <div class="card p-4 mt-4 shadow" th:if="${I1 != null}">
                 <h4 class="text-success">Resultados</h4>
-                <!-- Formatting numbers to 4 decimal places for better readability -->
-                <p>I₁ = <span th:text="${#numbers.formatDecimal(I1, 1, 4)}"></span> A</p>
-                <p>I₂ = <span th:text="${#numbers.formatDecimal(I2, 1, 4)}"></span> A</p>
-                <p>I₃ = <span th:text="${#numbers.formatDecimal(I3, 1, 4)}"></span> A</p>
-                <p>I₄ = <span th:text="${#numbers.formatDecimal(I4, 1, 4)}"></span> A</p>
-                <p>I₅ = <span th:text="${#numbers.formatDecimal(I5, 1, 4)}"></span> A</p>
+                <!-- Formatting numbers to 2 decimal places and converting to mA for better readability -->
+                <p>I₁ = <span th:text="${#numbers.formatDecimal(I1 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₂ = <span th:text="${#numbers.formatDecimal(I2 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₃ = <span th:text="${#numbers.formatDecimal(I3 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₄ = <span th:text="${#numbers.formatDecimal(I4 * 1000, 1, 2)}"></span> mA</p>
+                <p>I₅ = <span th:text="${#numbers.formatDecimal(I5 * 1000, 1, 2)}"></span> mA</p>
+                <hr>
+                <p><b>I₆ (Fonte) = <span th:text="${#numbers.formatDecimal(I6 * 1000, 1, 2)}"></span> mA</b></p>
             </div>
         </div>
     </div>
