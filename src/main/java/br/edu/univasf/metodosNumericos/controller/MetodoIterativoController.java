@@ -17,7 +17,14 @@ public class MetodoIterativoController {
     }
 
     @GetMapping("/metodoIterativo")
-    public String abrir() {
+    public String abrir(Model model) {
+        // Add empty attributes to prevent Thymeleaf errors on first load
+        model.addAttribute("R1", "");
+        model.addAttribute("R2", "");
+        model.addAttribute("R3", "");
+        model.addAttribute("R4", "");
+        model.addAttribute("R5", "");
+        model.addAttribute("E", "");
         return "metodosIterativos";
     }
 
@@ -34,13 +41,28 @@ public class MetodoIterativoController {
 
         double[] v = service.resolver(R1, R2, R3, R4, R5, E);
 
-        double VA = v[0], VB = v[1], VD = v[2];
+        double Vb = v[0];
+        double Vc = v[1];
 
-        model.addAttribute("I1", (VA - VB) / R1);
-        model.addAttribute("I2", (VA - VD) / R2);
-        model.addAttribute("I3", (VB - VD) / R3);
-        model.addAttribute("I4", (VD - 0) / R4);
-        model.addAttribute("I5", (VA - 0) / R5);
+        // Based on the corrected circuit diagram:
+        // I1 flows from E to Vb through R1
+        // I2 flows from E to Vc through R2
+        // I3 flows from Vb to GND through R3
+        // I4 flows from Vc to GND through R4
+        // I5 flows between Vb and Vc through R5 (direction depends on which voltage is higher)
+        model.addAttribute("I1", (E - Vb) / R1);
+        model.addAttribute("I2", (E - Vc) / R2);
+        model.addAttribute("I3", Vb / R3);
+        model.addAttribute("I4", Vc / R4);
+        model.addAttribute("I5", (Vb - Vc) / R5);
+
+        // Add input values to the model to repopulate the form
+        model.addAttribute("R1", R1);
+        model.addAttribute("R2", R2);
+        model.addAttribute("R3", R3);
+        model.addAttribute("R4", R4);
+        model.addAttribute("R5", R5);
+        model.addAttribute("E", E);
 
         return "metodosIterativos";
     }
