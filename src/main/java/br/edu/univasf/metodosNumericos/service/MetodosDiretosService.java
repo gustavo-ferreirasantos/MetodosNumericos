@@ -2,6 +2,7 @@ package br.edu.univasf.metodosNumericos.service;
 
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 @Service
@@ -110,17 +111,22 @@ public class MetodosDiretosService {
         return x;
     }
 
+    private String formatNumber(double number) {
+        DecimalFormat df = new DecimalFormat("#.####");
+        return df.format(number);
+    }
+
     public String formatarEquacoes(double[][] a, double[] b) {
         StringBuilder sb = new StringBuilder();
         int n = b.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                sb.append(a[i][j]).append(" X").append(j + 1);
+                sb.append(formatNumber(a[i][j])).append(" X").append(j + 1);
                 if (j < n - 1) {
                     sb.append(" + ");
                 }
             }
-            sb.append(" = ").append(b[i]).append("<br>");
+            sb.append(" = ").append(formatNumber(b[i])).append("<br>");
         }
         return sb.toString();
     }
@@ -128,7 +134,7 @@ public class MetodosDiretosService {
     public String formatarResultado(double[] x) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < x.length; i++) {
-            sb.append("X").append(i + 1).append(" = ").append(x[i]).append("<br>");
+            sb.append("X").append(i + 1).append(" = ").append(formatNumber(x[i])).append("<br>");
         }
         return sb.toString();
     }
