@@ -94,17 +94,20 @@
         </form>
     </div>
 
+    <!-- SISTEMA DE EQUAÇÕES -->
+    <div class="card shadow-sm mt-4 p-4" th:if="${equacoes != null}">
+        <h4 class="text-primary fw-bold">
+            <i class="bi bi-card-text"></i> Sistema de Equações:
+        </h4>
+        <div class="mt-3" th:utext="${equacoes}"></div>
+    </div>
+
     <!-- RESULTADOS -->
     <div class="card shadow-sm mt-4 p-4" th:if="${resGauss != null}">
         <h4 class="text-success fw-bold">
             <i class="bi bi-check-circle"></i> Resultado:
         </h4>
-
-        <div class="mt-3" th:each="valor, iter : ${resGauss}">
-            <strong th:text="'X' + ${iter.index + 1} + ':'"></strong>
-            <span th:text="${valor}"></span>
-            <br>
-        </div>
+        <div class="mt-3" th:utext="${resGauss}"></div>
     </div>
 
     <div class="text-center mt-4">

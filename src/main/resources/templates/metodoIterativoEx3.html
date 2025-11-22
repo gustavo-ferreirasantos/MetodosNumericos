@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Circuito Elétrico – Gauss-Seidel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #eef2f7, #dfe6ee); min-height: 100vh; font-family: "Segoe UI", sans-serif; }
+        header { background: #dc3545; color: #fff; padding: 2rem 0; text-align: center; border-radius: 0 0 20px 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .card { border-radius: 16px; border: none; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+        .card-header { background: #dc3545; color: white; font-weight: bold; font-size: 18px; border-radius: 16px 16px 0 0; }
+        footer { margin-top: 40px; background-color: #dc3545; color: white; padding: 12px; text-align: center; }
+        .form-control-sm { width: 80px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="fw-bold"><i class="bi bi-lightning-charge"></i> Exemplo 3: Circuito Elétrico</h1>
+    <p class="mb-0 fs-5">Método de Gauss-Seidel</p>
+</header>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Diagrama do Circuito</div>
+                <div class="card-body text-center">
+                    <img th:src="@{/t2_ex3.png}" alt="Diagrama do Circuito Elétrico" class="img-fluid" style="max-width: 500px;">
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Valores Padrão</div>
+                <div class="card-body text-center">
+                    <button class="btn btn-outline-danger" onclick="carregarExemplo()">
+                        <i class="bi bi-lightbulb"></i> Carregar Valores do Diagrama
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="limparCampos()">
+                        <i class="bi bi-trash"></i> Limpar
+                    </button>
+                </div>
+            </div>
+
+            <form method="post" action="/metodoIterativo/ex3" class="card p-4 shadow-sm">
+                <h5 class="mb-3">Resistores (Ω)</h5>
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto"><label for="r1">R1 (5Ω):</label><input type="number" step="any" id="r1" name="r1" class="form-control form-control-sm" th:value="${r1}" required></div>
+                    <div class="col-auto"><label for="r2">R2 (2.5Ω):</label><input type="number" step="any" id="r2" name="r2" class="form-control form-control-sm" th:value="${r2}" required></div>
+                    <div class="col-auto"><label for="r3">R3 (2Ω):</label><input type="number" step="any" id="r3" name="r3" class="form-control form-control-sm" th:value="${r3}" required></div>
+                    <div class="col-auto"><label for="r4">R4 (3.5Ω):</label><input type="number" step="any" id="r4" name="r4" class="form-control form-control-sm" th:value="${r4}" required></div>
+                    <div class="col-auto"><label for="r5">R5 (5Ω):</label><input type="number" step="any" id="r5" name="r5" class="form-control form-control-sm" th:value="${r5}" required></div>
+                    <div class="col-auto"><label for="r6">R6 (8Ω):</label><input type="number" step="any" id="r6" name="r6" class="form-control form-control-sm" th:value="${r6}" required></div>
+                    <div class="col-auto"><label for="r7">R7 (4Ω):</label><input type="number" step="any" id="r7" name="r7" class="form-control form-control-sm" th:value="${r7}" required></div>
+                    <div class="col-auto"><label for="r8">R8 (3Ω):</label><input type="number" step="any" id="r8" name="r8" class="form-control form-control-sm" th:value="${r8}" required></div>
+                    <div class="col-auto"><label for="r9">R9 (2Ω):</label><input type="number" step="any" id="r9" name="r9" class="form-control form-control-sm" th:value="${r9}" required></div>
+                </div>
+
+                <hr class="my-4">
+                <h5 class="mb-3">Fontes de Tensão (V)</h5>
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto"><label for="v1">V1 (12V):</label><input type="number" step="any" id="v1" name="v1" class="form-control form-control-sm" th:value="${v1}" required></div>
+                    <div class="col-auto"><label for="v2">V2 (16V):</label><input type="number" step="any" id="v2" name="v2" class="form-control form-control-sm" th:value="${v2}" required></div>
+                    <div class="col-auto"><label for="v3">V3 (14V):</label><input type="number" step="any" id="v3" name="v3" class="form-control form-control-sm" th:value="${v3}" required></div>
+                    <div class="col-auto"><label for="v4">V4 (10V):</label><input type="number" step="any" id="v4" name="v4" class="form-control form-control-sm" th:value="${v4}" required></div>
+                    <div class="col-auto"><label for="v5">V5 (30V):</label><input type="number" step="any" id="v5" name="v5" class="form-control form-control-sm" th:value="${v5}" required></div>
+                </div>
+
+                <button type="submit" class="btn btn-danger w-100 mt-4 fw-bold py-2">
+                    <i class="bi bi-calculator"></i> Calcular Correntes
+                </button>
+            </form>
+
+            <div class="card p-4 mt-4 shadow-sm" th:if="${correntes != null}">
+                <h4 class="text-success fw-bold"><i class="bi bi-check-circle"></i> Resultados</h4>
+                <p class="mt-2">Corrente i₁ = <span class="fw-bold" th:text="${#numbers.formatDecimal(correntes[0], 1, 4)}"></span> A</p>
+                <p>Corrente i₂ = <span class="fw-bold" th:text="${#numbers.formatDecimal(correntes[1], 1, 4)}"></span> A</p>
+                <p>Corrente i₃ = <span class="fw-bold" th:text="${#numbers.formatDecimal(correntes[2], 1, 4)}"></span> A</p>
+                <p>Corrente i₄ = <span class="fw-bold" th:text="${#numbers.formatDecimal(correntes[3], 1, 4)}"></span> A</p>
+                <p>Corrente i₅ = <span class="fw-bold" th:text="${#numbers.formatDecimal(correntes[4], 1, 4)}"></span> A</p>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    © 2025 - UNIVASF | Cálculo Numérico - Métodos Iterativos
+</footer>
+
+<script>
+    function carregarExemplo() {
+        document.getElementById('r1').value = 5;
+        document.getElementById('r2').value = 2.5;
+        document.getElementById('r3').value = 2;
+        document.getElementById('r4').value = 3.5;
+        document.getElementById('r5').value = 5;
+        document.getElementById('r6').value = 8;
+        document.getElementById('r7').value = 4;
+        document.getElementById('r8').value = 3;
+        document.getElementById('r9').value = 2;
+        document.getElementById('v1').value = 12;
+        document.getElementById('v2').value = 16;
+        document.getElementById('v3').value = 14;
+        document.getElementById('v4').value = 10;
+        document.getElementById('v5').value = 30;
+    }
+
+    function limparCampos() {
+        const ids = ['r1','r2','r3','r4','r5','r6','r7','r8','r9','v1','v2','v3','v4','v5'];
+        ids.forEach(id => document.getElementById(id).value = '');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        // Preenche os campos se não houver valores (primeira carga)
+        if (document.getElementById('r1').value === '') {
+            carregarExemplo();
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

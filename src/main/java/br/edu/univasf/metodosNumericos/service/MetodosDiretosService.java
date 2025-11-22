@@ -110,7 +110,26 @@ public class MetodosDiretosService {
         return x;
     }
 
+    public String formatarEquacoes(double[][] a, double[] b) {
+        StringBuilder sb = new StringBuilder();
+        int n = b.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                sb.append(a[i][j]).append(" X").append(j + 1);
+                if (j < n - 1) {
+                    sb.append(" + ");
+                }
+            }
+            sb.append(" = ").append(b[i]).append("<br>");
+        }
+        return sb.toString();
+    }
 
-
-
+    public String formatarResultado(double[] x) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < x.length; i++) {
+            sb.append("X").append(i + 1).append(" = ").append(x[i]).append("<br>");
+        }
+        return sb.toString();
+    }
 }

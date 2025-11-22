@@ -44,41 +44,14 @@ public class MetodosDiretosController {
         }
 
         double[] x = service.resolverGauss(A, b);
-        model.addAttribute("resGauss", x);
+
+        String equacoes = service.formatarEquacoes(A, b);
+        String resultadoFormatado = service.formatarResultado(x);
+
+        model.addAttribute("equacoes", equacoes);
+        model.addAttribute("resGauss", resultadoFormatado);
         return "metodosDiretos";
     }
-
-
-    /*
-    @PostMapping("/gauss")
-    public String gauss(@RequestParam Map<String, String> params, Model model) {
-
-        // Descobrir o tamanho n (baseado em quantos 'b' existem)
-        int n = 0;
-        for (String key : params.keySet()) {
-            if (key.startsWith("b")) n++;
-        }
-
-        // Matriz aumentada (n x (n+1))
-        double[][] a = new double[n + 1][n + 2]; // índice começa em 1 para compatibilidade com a função
-        double temp;
-
-        // Montagem da matriz aumentada [A | b]
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= n; j++) {
-                a[i][j] = Double.parseDouble(params.get("a" + (i - 1) + "_" + (j - 1)));
-            }
-            a[i][n + 1] = Double.parseDouble(params.get("b" + (i - 1)));
-        }
-
-        // Chama o método resolverSistema
-        double[] x = service.resolverSistema(a, n);
-
-        // Adiciona o resultado ao modelo
-        model.addAttribute("resGauss", x);
-        return "metodosDiretos";
-    }
-    */
 
 
 
