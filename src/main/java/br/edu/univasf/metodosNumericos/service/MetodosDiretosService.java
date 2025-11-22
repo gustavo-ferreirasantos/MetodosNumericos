@@ -83,34 +83,6 @@ public class MetodosDiretosService {
     }
 
 
-
-    // Função que resolve o sistema linear usando Eliminação de Gauss
-    public double[] resolverSistema(double[][] a, int n) {
-        double[] x = new double[n + 1];
-        double temp;
-
-        // Triangularização
-        for (int k = 1; k < n; k++) {
-            for (int i = k + 1; i <= n; i++) {
-                temp = (-1.0) * a[i][k] / a[k][k];
-                for (int j = 1; j <= n + 1; j++) {
-                    a[i][j] = (temp * a[k][j]) + a[i][j];
-                }
-            }
-        }
-
-        // Substituição retroativa
-        for (int i = n; i >= 1; i--) {
-            x[i] = a[i][n + 1];
-            for (int j = n; j > i; j--) {
-                x[i] -= x[j] * a[i][j];
-            }
-            x[i] = x[i] / a[i][i];
-        }
-
-        return x;
-    }
-
     private String formatNumber(double number) {
         DecimalFormat df = new DecimalFormat("#.####");
         return df.format(number);

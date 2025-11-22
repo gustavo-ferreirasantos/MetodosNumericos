@@ -25,9 +25,13 @@
 
     <hr/>
 
-    <div th:if="${resultado != null}">
-        <h5>Resultado</h5>
-        <pre th:text="${resultado}"></pre>
+    <div class="mt-4" th:if="${resultado}">
+        <h4 class="fw-bold text-primary">Resultado</h4>
+
+        <pre class="p-3 bg-light border rounded shadow-sm"
+             style="white-space: pre-wrap; font-size: 1.05rem;"
+             th:text="${resultado}">
+    </pre>
     </div>
 </div>
 
@@ -61,8 +65,8 @@
 
     // Exemplo predefinido (dados do enunciado)
     function loadExample1() {
-        const anos = [1971,1972,1974,1978,1982,1985,1989,1993,1997,1999,2000];
-        const N = [2300,3500,6000,29000,120000,275000,1180000,3100000,7500000,24000000,42000000];
+        const anos = [1971,1972,1974,1978,1982,1986,1989,1993,1997,1999,2000];
+        const N = [2250,3300,6000,29000,134000,275000,1200000,3100000,7500000,9500000,42000000];
         const rows = document.getElementById('rows');
         rows.innerHTML = '';
         for (let i = 0; i < anos.length; i++) addRow(anos[i], N[i]);

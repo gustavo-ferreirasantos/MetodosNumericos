@@ -28,9 +28,13 @@
 
     <hr/>
 
-    <div th:if="${resultado != null}">
-        <h5>Resultados</h5>
-        <pre th:text="${resultado}"></pre>
+    <div class="mt-4" th:if="${resultado}">
+        <h4 class="fw-bold text-primary">Resultado</h4>
+
+        <pre class="p-3 bg-light border rounded shadow-sm"
+             style="white-space: pre-wrap; font-size: 1.05rem;"
+             th:text="${resultado}">
+    </pre>
     </div>
 </div>
 
