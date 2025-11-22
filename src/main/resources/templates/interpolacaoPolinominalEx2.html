@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Interpolação Polinomial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-white">
+
+<div class="container mt-4">
+    <h3>Interpolação Polinomial — Valor de V(i)</h3>
+
+    <form method="post" class="mt-3">
+
+        <div class="mb-3">
+            <label>Valor de i</label>
+            <input class="form-control" type="number" step="0.01" name="valor" required>
+        </div>
+
+        <button class="btn btn-warning w-100 text-white">Interpolar</button>
+    </form>
+
+    <div th:if="${resultado}" class="mt-4">
+
+        <h4>Resultados</h4>
+
+        <ul>
+            <li>2º grau (Lagrange): <span th:text="${resultado['lagrange2']}"></span></li>
+            <li>2º grau (Newton): <span th:text="${resultado['newton2']}"></span></li>
+            <li>3º grau (Lagrange): <span th:text="${resultado['lagrange3']}"></span></li>
+            <li>3º grau (Newton): <span th:text="${resultado['newton3']}"></span></li>
+            <li>4º grau (Lagrange): <span th:text="${resultado['lagrange4']}"></span></li>
+            <li>4º grau (Newton): <span th:text="${resultado['newton4']}"></span></li>
+        </ul>
+
+    </div>
+</div>
+
+</body>
+</html>
