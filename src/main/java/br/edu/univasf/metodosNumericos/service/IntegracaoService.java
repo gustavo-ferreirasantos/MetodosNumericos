@@ -69,14 +69,11 @@ public class IntegracaoService {
             }
         }
 
-        double areaSimpson =
-                (h / 3.0) * (largura[0] + largura[n - 1]
-                        + 4 * somaImpares
-                        + 2 * somaPares);
+        double areaSimpson = (h / 3.0) * (largura[0] + largura[n - 1] + 4 * somaImpares + 2 * somaPares);
 
 
-        // Retorna [Trapézio, Simpson]
 
         return new double[]{ areaTrapezio, areaSimpson };
+        // Retorna [Trapézio, Simpson]
     }
 }
