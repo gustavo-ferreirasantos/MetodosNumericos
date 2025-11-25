@@ -181,21 +181,17 @@ f(x<span th:text="${iter.index}"></span>) = <span th:text="${item}"></span>
         <!-- Δx -->
         <div class="step-box mt-3">
             <div class="subtitle">Passo 2 — Determinação de Δx</div>
-            <p><strong>Δx:</strong> <span class="text-primary fw-bold" th:text="${deltaX}"></span></p>
         </div>
 
         <!-- TRAPÉZIOS -->
         <div class="step-box">
             <div class="subtitle">Passo 3 — Regra dos Trapézios</div>
-            <p><strong>Soma interna Σfᵢ =</strong> <span th:text="${somaTrapezios}"></span></p>
             <p><strong>Resultado final:</strong> <span th:text="${areaTrapFmt}"></span> m²</p>
         </div>
 
         <!-- SIMPSON -->
         <div class="step-box">
             <div class="subtitle">Passo 4 — Regra de Simpson</div>
-            <p><strong>Soma Ímpares:</strong> <span th:text="${somaImpares}"></span></p>
-            <p><strong>Soma Pares:</strong> <span th:text="${somaPares}"></span></p>
             <p><strong>Resultado final:</strong>
                 <span class="text-primary fw-bold" th:text="${areaSimpsonFmt}"></span> m²
             </p>

@@ -18,7 +18,6 @@ public class MetodoIterativoController {
 
     @GetMapping("/metodoIterativo")
     public String abrir(Model model) {
-        // Add empty attributes to prevent Thymeleaf errors on first load
         model.addAttribute("R1", "");
         model.addAttribute("R2", "");
         model.addAttribute("R3", "");
@@ -44,13 +43,6 @@ public class MetodoIterativoController {
         double Vb = v[0];
         double Vc = v[1];
 
-        // Based on the corrected circuit diagram:
-        // I1 flows from E to Vb through R1
-        // I2 flows from E to Vc through R2
-        // I3 flows from Vc to GND through R3
-        // I4 flows from Vb to GND through R4
-        // I5 flows between Vb and Vc through R5
-        // I6 is the total source current (I1 + I2)
         double i1 = (E - Vb) / R1;
         double i2 = (E - Vc) / R2;
         double i3 = Vc / R3;
@@ -65,7 +57,6 @@ public class MetodoIterativoController {
         model.addAttribute("I5", i5);
         model.addAttribute("I6", i6);
 
-        // Add input values to the model to repopulate the form
         model.addAttribute("R1", R1);
         model.addAttribute("R2", R2);
         model.addAttribute("R3", R3);

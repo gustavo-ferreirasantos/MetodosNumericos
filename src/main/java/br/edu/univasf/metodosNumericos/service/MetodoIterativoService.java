@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 public class MetodoIterativoService {
 
     /**
-     * Solves the node voltages for a Wheatstone bridge circuit.
-     * The bridge is configured as:
      *       (E)
      *       / \
      *      R1  R2
@@ -22,15 +20,14 @@ public class MetodoIterativoService {
      * @param R2 Resistor 2
      * @param R3 Resistor 3
      * @param R4 Resistor 4
-     * @param R5 Resistor 5 (middle)
-     * @param E  Voltage source
-     * @return A double array containing the voltages [Vb, Vc]
+     * @param R5 Resistor 5
+     * @param E  Tensão na fonte
      */
     public double[] resolver(double R1, double R2, double R3, double R4, double R5, double E) {
 
-        // Nodal analysis equations:
-        // Node Vb: (Vb - E)/R1 + Vb/R4 + (Vb - Vc)/R5 = 0  => Vb*(1/R1 + 1/R4 + 1/R5) - Vc*(1/R5) = E/R1
-        // Node Vc: (Vc - E)/R2 + Vc/R3 + (Vc - Vb)/R5 = 0  => -Vb*(1/R5) + Vc*(1/R2 + 1/R3 + 1/R5) = E/R2
+        // Análise nodal das equações:
+        // Nodo Vb: (Vb - E)/R1 + Vb/R4 + (Vb - Vc)/R5 = 0  => Vb*(1/R1 + 1/R4 + 1/R5) - Vc*(1/R5) = E/R1
+        // Nodo Vc: (Vc - E)/R2 + Vc/R3 + (Vc - Vb)/R5 = 0  => -Vb*(1/R5) + Vc*(1/R2 + 1/R3 + 1/R5) = E/R2
 
         double a11 = 1.0 / R1 + 1.0 / R4 + 1.0 / R5;
         double a12 = -1.0 / R5;
@@ -55,7 +52,7 @@ public class MetodoIterativoService {
         double[] x = new double[n];
         double[] xOld = new double[n];
 
-        // A zero initial guess is a safe choice.
+
         for (int i = 0; i < n; i++) {
             x[i] = 0;
         }

@@ -19,9 +19,7 @@ public class InterpolacaoController {
     }
 
 
-    // ============================================================
     // EXEMPLO 1 – LEI DE MOORE (Regressão Logarítmica)
-    // ============================================================
 
     @GetMapping("/ex1")
     public String ex1() {
@@ -67,9 +65,8 @@ public class InterpolacaoController {
 
 
 
-    // ============================================================
     // EXEMPLO 2 – Interpolação (Lagrange e Newton)
-    // ============================================================
+
 
     @GetMapping("/ex2")
     public String ex2() {
@@ -122,9 +119,9 @@ public class InterpolacaoController {
 
 
 
-    // ============================================================
+
     // EXEMPLO 3 – Regressão (Linear, Quadrática e Exponencial)
-    // ============================================================
+
 
     @GetMapping("/ex3")
     public String ex3() {
