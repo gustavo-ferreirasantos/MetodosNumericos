@@ -1,37 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <title>Ex3 — Regressão por Mínimos Quadrados</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interpolação Polinomial - Tópico 3</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef2f7, #dfe6ee);
+            min-height: 100vh;
+        }
+
+        header {
+            background: #0d6efd;
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .card {
+            border-radius: 16px;
+            border: none;
+        }
+
+        .card-header {
+            background: #0d6efd;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        footer {
+            margin-top: 40px;
+            background-color: #0d6efd;
+            color: white;
+            padding: 12px;
+        }
+    </style>
 </head>
-<body class="bg-light">
-<div class="container py-4">
-    <h3>Exemplo 3 — Regressão (x, F(x))</h3>
+<body>
 
-    <form method="post" action="/interpolacaoPolinominal/ex3">
-        <div id="rows" class="mb-3"></div>
+<header>
+    <h1 class="fw-bold"><i class="bi bi-graph-up"></i> Interpolação Polinomial - Tópico 3</h1>
+    <p class="mb-0 fs-5">Exemplo 3 — Regressão (x, F(x))</p>
+</header>
 
-        <div class="mb-3">
-            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addRow()">+ Adicionar linha</button>
-            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeLast()">- Remover última</button>
-            <button type="button" class="btn btn-sm btn-info" onclick="loadExample3()">Carregar Exemplo</button>
-        </div>
+<main class="container my-5">
 
-        <button type="submit" class="btn btn-success w-100">Calcular Ajustes</button>
-    </form>
+    <div class="card shadow-sm p-4">
+        <form method="post" action="/interpolacaoPolinominal/ex3">
+            <div id="rows" class="mb-3"></div>
 
-    <hr/>
+            <div class="mb-3">
+                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addRow()">+ Adicionar linha</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeLast()">- Remover última</button>
+                <button type="button" class="btn btn-sm btn-info" onclick="loadExample3()">Carregar Exemplo</button>
+            </div>
 
-    <div class="mt-4" th:if="${resultado}">
-        <h4 class="fw-bold text-primary">Resultado</h4>
+            <button type="submit" class="btn btn-primary w-100 fw-bold">
+                <i class="bi bi-play-circle"></i> Calcular Ajustes
+            </button>
+        </form>
+    </div>
 
+    <div class="card shadow-sm mt-4 p-4" th:if="${resultado}">
+        <h4 class="text-success fw-bold">
+            <i class="bi bi-check-circle"></i> Resultado:
+        </h4>
         <pre class="p-3 bg-light border rounded shadow-sm"
              style="white-space: pre-wrap; font-size: 1.05rem;"
              th:text="${resultado}">
-    </pre>
+        </pre>
     </div>
-</div>
+
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+</main>
+
+<footer class="text-center">
+    © 2025 - UNIVASF | Cálculo Numérico - Interpolação Polinomial
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
     function createRow(x='', y='') {
@@ -64,5 +124,6 @@
 
     (function(){ addRow(); addRow(); addRow(); })();
 </script>
+
 </body>
 </html>
